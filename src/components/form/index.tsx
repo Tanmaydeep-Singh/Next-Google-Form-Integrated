@@ -10,6 +10,8 @@ function Form() {
         "entry.1166974658": ""
     })
 
+
+    
     const handleInputData = (input: string) => (e: { target: { value: string; }; }) => {
         const { value } = e.target;
 
@@ -18,11 +20,28 @@ function Form() {
             [input]: value
         }));
     };
-    const url = `https://docs.google.com/forms/d/e/1FAIpQLSdH__-CcPx2mfFT-RXWi2i-U2B5i32odMIW8yKCrJc_w59EDg/formResponse`;
+
+    
+
+    const dataSend = async() => {
+        console.log("SEND")
+        const url =`https://docs.google.com/forms/d/e/1FAIpQLSdH__-CcPx2mfFT-RXWi2i-U2B5i32odMIW8yKCrJc_w59EDg/formResponse?entry.2005620554=${formdata['entry.2005620554']}&entry.1045781291=${formdata['entry.1045781291']}&entry.1166974658=${formdata['entry.1166974658']}`;
+        
+        const res = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded"
+            }
+          });
+        console.log("resp", res);
+    }
+
+
+   
    
     return (
         <div className='flex w-screen justify-center my-5 md:my-10'>
-            <form className="w-full max-w-lg" action={url} onSubmit={(e) => {  console.log("SUBMIT") }}>
+            <form className="w-full max-w-lg" >
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
@@ -67,9 +86,9 @@ function Form() {
                 <button
                     type="submit"
                     className="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-                // onClick={(e) => {
-                //     handleSubmit(e);
-                // }}
+                onClick={(e) => {
+                    dataSend();
+                }}
                 >
                     Submit
                 </button>
